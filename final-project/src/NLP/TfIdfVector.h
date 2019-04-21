@@ -19,6 +19,11 @@ using std::map;
 class TfIdfVector {
 
   public:
+    /**
+     * Basic constructor from a list of messages.
+     * 
+     * @param messages vector of Message objects.
+     */
     TfIdfVector(vector<Message> messages);
 
   private:
