@@ -508,4 +508,7 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
+# data folder
+final-project/data/
+
 # End of https://www.gitignore.io/api/c++,xcode,visualstudio,openframeworks,openframeworks+visualstudio
