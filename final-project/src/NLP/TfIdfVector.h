@@ -58,5 +58,15 @@ class TfIdfVector {
      */
     vector<string> split(const string toSplit, const char delim) const;
 
+    /**
+     * Helper function for calculation tfidf values.
+     * 
+     * @param termFreq the frequency of the term in the document.
+     * @param documentWordCt number of words in document
+     * @param documentFreq number of documents containing the word.
+     * @param numDocs total number of documents.
+     */
+    double calculateTfIdf(int termCt, int documentWordCt, int documentCt, int numDocs);
+
     unsigned int num_messages = 0;
 };
