@@ -10,14 +10,14 @@ Message::Message(const string content, const string sender, const string id) {
   this->messageId = id;
 }
 
-string Message::getContent() {
+string Message::getContent() const {
   return content;
 }
 
-string Message::getSender() {
+string Message::getSender() const {
   return sender;
 }
 
-string Message::getMessageId() {
+string Message::getMessageId() const {
   return messageId;
 }

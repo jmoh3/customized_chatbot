@@ -20,21 +20,21 @@ class Message {
      * 
      * @return content of message.
      */
-    string getContent();
+    string getContent() const;
 
     /**
      * Getter for message sender.
      * 
      * @return sender.
      */
-    string getSender();
+    string getSender() const;
 
     /**
      * Getter for message id.
      * 
      * @return message id.
      */
-    string getMessageId();
+    string getMessageId() const;
 
   private:
     string content;
