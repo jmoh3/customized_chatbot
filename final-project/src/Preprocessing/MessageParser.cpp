@@ -1,16 +1,21 @@
 #include "MessageParser.h"
 #include "Message.h"
+
 #include "include/rapidjson/document.h"
 #include "include/rapidjson/writer.h"
 #include "include/rapidjson/stringbuffer.h"
 
 #include <iostream>
+#include <vector>
+#include <utility>
 
 #include <fstream>
 #include <sstream>
 
 using rapidjson::Document;
 using std::string;
+using std::vector;
+using std::pair;
 
 MessageParser::MessageParser(std::string filename) {
   std::ifstream nameFileout;
@@ -48,4 +53,25 @@ MessageParser::MessageParser(std::string filename) {
 
 std::vector<Message> MessageParser::getMessages() {
   return messages;
+}
+
+vector<pair<vector<Message>, Message>> MessageParser::getMessageResponsePairs(std::string user) {
+  vector<pair<vector<Message>, Message>> pairs;
+
+  vector<Message> prompts;
+  
+  for (const Message & message : messages) {
+
+    if (message.getSender() == user) {
+      if (prompts.size() > 0) {
+        pair<vector<Message>, Message> messageResponsePair(prompts, message);
+        pairs.push_back(messageResponsePair);
+        prompts.clear();
+      }
+    } else {
+      prompts.push_back(message);
+    }
+  }
+
+  return pairs;
 }
