@@ -64,6 +64,10 @@ vector<pair<vector<Message>, Message>> MessageParser::getMessageResponsePairs(st
 
     if (message.getSender() == user) {
       if (prompts.size() > 0) {
+        for (auto it = prompts.begin(); it != prompts.end(); it++) {
+          it->setResponseId(message.getMessageId());
+        }
+
         pair<vector<Message>, Message> messageResponsePair(prompts, message);
         pairs.push_back(messageResponsePair);
         prompts.clear();

@@ -21,3 +21,19 @@ string Message::getSender() const {
 string Message::getMessageId() const {
   return messageId;
 }
+
+void Message::setResponseId(string id) {
+  responseId = id;
+}
+
+string Message::getResponseId() const {
+  return responseId;
+}
+
+void Message::setWordCount(unsigned wordCt) {
+  wordCount = wordCt;
+}
+
+unsigned Message::getWordCount() const {
+  return wordCount;
+}

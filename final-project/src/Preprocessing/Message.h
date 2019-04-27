@@ -36,9 +36,37 @@ class Message {
      */
     string getMessageId() const;
 
+    /**
+     * Sets response id.
+     * 
+     */
+    void setResponseId(string id);
+
+    /**
+     * Gets response id.
+     * 
+     * @return response id.
+     */
+    string getResponseId() const;
+
+    /**
+     * Set the word count of the message.
+     */
+    void setWordCount(unsigned wordCt);
+
+    /**
+     * Getter for word count.
+     * 
+     * @return word count.
+     */
+    unsigned getWordCount() const;
+
   private:
     string content;
     string sender;
     string messageId;
+    string responseId;
+
+    unsigned wordCount;
 
 };
