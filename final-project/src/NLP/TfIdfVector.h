@@ -72,7 +72,7 @@ class TfIdfVector {
      *
      * @param message The message that will fill the vector
      */
-    map<string, int> message_to_word_map(Message& message) const;
+    map<string, int> message_to_word_map(Message& message);
 
     /**
      * String splitter helper function.
@@ -91,8 +91,6 @@ class TfIdfVector {
      * @param numDocs total number of documents.
      */
     double calculateTfIdf(int termCt, int documentWordCt, int documentCt, int numDocs);
-
-    map<string, int> getCommonWordMap(map<string, map<string, int>>& wordMap);
 
     unsigned int num_messages = 0;
 

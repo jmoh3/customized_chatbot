@@ -12,7 +12,7 @@ using std::map;
 using std::pair;
 
 int main() {
-    
+
     MessageParser messages("../../data/messages/inbox/nanditaravikumar_ojm_ljprrg/message_1.json");
 
     vector<pair<vector<Message>, Message>> pairs = messages.getMessageResponsePairs("Jackie Oh");
@@ -25,7 +25,7 @@ int main() {
         }
     }
 
-    TfIdfVector vectorizer(vec, 5, 10);
+    TfIdfVector vectorizer(vec, 0, 100);
 
     vector<sparseVector> vectors = vectorizer.getVectors();
     int vectorLength = vectorizer.getVectorLength();

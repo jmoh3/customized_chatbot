@@ -17,7 +17,7 @@ TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
   int numMessages = messages.size();
   init_word_count_maps(messages);
 
-  map<string, int> commonWords = getCommonWordMap(word_count_maps);
+  std::cout << "HERE " << word_frequencies.size() << std::endl; 
 
   vector<sparseVector> tfIdfVectors;
 
@@ -28,10 +28,11 @@ TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
     int wordCount = 0;
     int counter = 0;
 
-    for (auto wordIterator = commonWords.begin(); wordIterator != commonWords.end(); wordIterator++) {
-
+    for (auto wordIterator = word_frequencies.begin(); wordIterator != word_frequencies.end(); wordIterator++) {
       string currentWord = wordIterator->first;
       int wordDocumentFrequency = wordIterator->second;
+      counter += wordDocumentFrequency;
+      std::cout << wordDocumentFrequency << std::endl;
 
       if (wordDocumentFrequency < minFreq || wordDocumentFrequency > maxFreq) {
         continue;
@@ -44,7 +45,6 @@ TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
         wordCount += val;
         tfidfvec[counter] = calculateTfIdf(val, 1, wordDocumentFrequency, numMessages);
       }
-      counter++;
     }
 
     vectorLength = counter;
@@ -67,34 +67,14 @@ unsigned TfIdfVector::getVectorLength() const  {
   return vectorLength;
 }
 
-map<string, int> TfIdfVector::getCommonWordMap(map<string, map<string, int>>& wordMap) {
-  map<string, int> commonWords;
-
-  for (auto wordCountIterator = wordMap.begin(); wordCountIterator != wordMap.end(); wordCountIterator++) {
-    map<string, int> wordCountMap = wordCountIterator->second;
-    for (auto wordIterator = wordCountMap.begin(); wordIterator != wordCountMap.end(); wordIterator++) {
-      string currentWord = wordIterator->first;
-      if (commonWords.find(currentWord) != commonWords.end()) {
-        commonWords[currentWord] += 1;
-      } else {
-        commonWords[currentWord] = 1;
-      }
-    }
-  }
-
-  return commonWords;
-}
-
 void TfIdfVector::init_word_count_maps(vector<Message>& messages) {
-  // std::cout << "called\n" << messages.size() << std::endl;
   for (auto it = messages.begin(); it != messages.end(); it++) {
-    // std::cout << "hERe" << std::endl;
     map<string, int> word_count_map = message_to_word_map(*it);
-    word_count_maps[it->getMessageId()] = word_count_map;
+    word_count_maps[it->getResponseId()] = word_count_map;
   }
 }
 
-map<string, int> TfIdfVector::message_to_word_map(Message& message) const {
+map<string, int> TfIdfVector::message_to_word_map(Message& message) {
   string content = message.getContent();
   vector<string> splitMessage = split(content, cDelimiter);
   message.setWordCount(splitMessage.size());
@@ -106,6 +86,10 @@ map<string, int> TfIdfVector::message_to_word_map(Message& message) const {
       word_count_map[word] += 1;
     } else {
       word_count_map[word] = 1;
+    }
+    
+    if (word_frequencies.find(word) == word_frequencies.end()) {
+      word_frequencies[word] = 1;
     }
   }
 
