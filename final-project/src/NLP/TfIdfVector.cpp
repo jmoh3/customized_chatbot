@@ -13,34 +13,41 @@ using std::map;
 using std::stringstream;
 using std::getline;
 
-TfIdfVector::TfIdfVector(vector<Message> messages) {
+TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
   int numMessages = messages.size();
   init_word_count_maps(messages);
 
   map<string, int> commonWords = getCommonWordMap(word_count_maps);
 
-  vector<vector<double>> tfIdfVectors;
+  vector<sparseVector> tfIdfVectors;
 
   for (auto wordCountMapsIterator = word_count_maps.begin(); wordCountMapsIterator != word_count_maps.end(); wordCountMapsIterator++) {
-    std::cout << "HERE\n";
-    vector<double> tfidfvec;
+    sparseVector tfidfvec;
     map<string, int> currentWordCountMap = wordCountMapsIterator->second;
 
     int wordCount = 0;
+    int counter = 0;
 
     for (auto wordIterator = commonWords.begin(); wordIterator != commonWords.end(); wordIterator++) {
+
       string currentWord = wordIterator->first;
+      int wordDocumentFrequency = wordIterator->second;
+
+      if (wordDocumentFrequency < minFreq || wordDocumentFrequency > maxFreq) {
+        continue;
+      }
+
       double val = 0.0;
 
       if (currentWordCountMap.find(currentWord) != currentWordCountMap.end()) {
         val = currentWordCountMap[currentWord];
         wordCount += val;
-        std::cout << val << std::endl;
+        tfidfvec[counter] = calculateTfIdf(val, 1, wordDocumentFrequency, numMessages);
       }
-      // need word count of message
-      std::cout << calculateTfIdf(val, 1, wordIterator->second, numMessages) << std::endl;
-      tfidfvec.push_back(calculateTfIdf(val, 1, wordIterator->second, numMessages));
+      counter++;
     }
+
+    vectorLength = counter;
 
     for (int i = 0; i < tfidfvec.size(); i++) {
       tfidfvec[i] = tfidfvec[i] / wordCount;
@@ -52,8 +59,12 @@ TfIdfVector::TfIdfVector(vector<Message> messages) {
   this->tfIdfVectors = tfIdfVectors;
 }
 
-vector<vector<double>> TfIdfVector::getVectors() const {
+vector<sparseVector> TfIdfVector::getVectors() const {
   return tfIdfVectors;
+}
+
+unsigned TfIdfVector::getVectorLength() const  {
+  return vectorLength;
 }
 
 map<string, int> TfIdfVector::getCommonWordMap(map<string, map<string, int>>& wordMap) {
@@ -75,9 +86,9 @@ map<string, int> TfIdfVector::getCommonWordMap(map<string, map<string, int>>& wo
 }
 
 void TfIdfVector::init_word_count_maps(vector<Message>& messages) {
-  std::cout << "called\n" << messages.size() << std::endl;
+  // std::cout << "called\n" << messages.size() << std::endl;
   for (auto it = messages.begin(); it != messages.end(); it++) {
-    std::cout << "hERe" << std::endl;
+    // std::cout << "hERe" << std::endl;
     map<string, int> word_count_map = message_to_word_map(*it);
     word_count_maps[it->getMessageId()] = word_count_map;
   }

@@ -16,6 +16,13 @@ using std::vector;
 using std::string;
 using std::map;
 
+/**
+ * Because these vectors are mostly zeroes, we don't really want to store all of these in memory
+ * instead, we can typedef a map as a sparse vector, and whenever we can't find an index in the map
+ * we will assume it is zero.
+ */
+typedef map<int, double> sparseVector;
+
 class TfIdfVector {
 
   public:
@@ -23,10 +30,20 @@ class TfIdfVector {
      * Basic constructor from a list of messages.
      * 
      * @param messages vector of Message objects.
+     * @param minFreq the minimum frequency a word must have to be included in the vectors.
+     * @param maxFreq the maximum frequency a word must have to be included in the vectors.
      */
-    TfIdfVector(vector<Message> messages);
+    TfIdfVector(vector<Message> messages, int minFreq, int maxFreq);
 
-    vector<vector<double>> getVectors() const;
+    /**
+     * Getter for tfidf vectors.
+     */
+    vector<sparseVector> getVectors() const;
+
+    /**
+     * Gets the length of each of the tfidf vectors.
+     */
+    unsigned int getVectorLength() const;
 
   // private:
     const char cDelimiter = ' ';
@@ -41,7 +58,7 @@ class TfIdfVector {
      */
     map<string, unsigned int> word_frequencies;
 
-    vector<vector<double>> tfIdfVectors;
+    vector<sparseVector> tfIdfVectors;
 
     /**
      * Initializes #word_count_maps.
@@ -78,4 +95,6 @@ class TfIdfVector {
     map<string, int> getCommonWordMap(map<string, map<string, int>>& wordMap);
 
     unsigned int num_messages = 0;
+
+    unsigned int vectorLength;
 };
