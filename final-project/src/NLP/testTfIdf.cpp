@@ -27,24 +27,29 @@ int main() {
 
     TfIdfVector vectorizer(vec, 0, 100);
 
-    vector<sparseVector> vectors = vectorizer.getVectors();
-    int vectorLength = vectorizer.getVectorLength();
+    // map<string, sparseVector> vectors = vectorizer.getVectors();
+    // int vectorLength = vectorizer.getVectorLength();
 
-    std::cout << vectors.size() << std::endl;
-    std::cout << vectorLength << std::endl;
+    // std::cout << "Number of messages: " << vectors.size() << std::endl;
+    // std::cout << "Length of tfidf vectors: " << vectorLength << std::endl;
 
-    for (auto it = vectors.begin(); it != vectors.end(); it++) {
-        sparseVector vec = *it;
-        for (int i = 0; i < vectorLength; i++) {
-            if (vec.find(i) == vec.end()) {
-                std::cout << "0 ";
-            } else {
-                std::cout << vec[i] << " ";
-            }
-        }
+    // for (auto it = vectors.begin(); it != vectors.end(); it++) {
+    //     sparseVector vec = it->second;
+    //     for (int i = 0; i < vectorLength; i++) {
+    //         if (vec.find(i) == vec.end()) {
+    //             std::cout << "0 ";
+    //         } else {
+    //             std::cout << vec[i] << " ";
+    //         }
+    //     }
 
-        std::cout << "\n";
-    }
+    //     std::cout << "\n";
+    // }
+
+    sparseVector vec1 = {{0 , 1}, {1, 1}};
+    sparseVector vec2 = {{1 , 1}};
+
+    std::cout << vectorizer.cosineSimilarity(vec1, vec2) << std::endl;
 
     return 0;
 }

@@ -38,7 +38,7 @@ class TfIdfVector {
     /**
      * Getter for tfidf vectors.
      */
-    vector<sparseVector> getVectors() const;
+    map<string, sparseVector> getVectors() const;
 
     /**
      * Gets the length of each of the tfidf vectors.
@@ -47,18 +47,6 @@ class TfIdfVector {
 
   // private:
     const char cDelimiter = ' ';
-    /**
-     * #word_count_maps holds a map for each message. Each map maps a word in
-     * that message to the number of times it has been seen in that message.
-     */
-    map<string, map<string, int>> word_count_maps;
-
-    /**
-     * #word_frequencies maps a word to the number of messages that word appears in
-     */
-    map<string, unsigned int> word_frequencies;
-
-    vector<sparseVector> tfIdfVectors;
 
     /**
      * Initializes #word_count_maps.
@@ -92,7 +80,30 @@ class TfIdfVector {
      */
     double calculateTfIdf(int termCt, int documentWordCt, int documentCt, int numDocs);
 
+    /**
+     * Helper method to calculate cosine similarity between 2 sparse vectors.
+     * 
+     * @return cosine similarity - measure of similarity that ranges from -1 (opposite) to 1 (same).
+     */
+    double cosineSimilarity(sparseVector vectorA, sparseVector vectorB) const;
+
+    /** Total number of messages. */
     unsigned int num_messages = 0;
 
+    /** Length of tfidf vectors (number of words we're accounting for). */
     unsigned int vectorLength;
+
+    /**
+     * #word_count_maps holds a map for each message. Each map maps a word in
+     * that message to the number of times it has been seen in that message.
+     */
+    map<string, map<string, int>> word_count_maps;
+
+    /**
+     * #word_frequencies maps a word to the number of messages that word appears in
+     */
+    map<string, unsigned int> word_frequencies;
+
+    /** Actual tfidf vectors. */
+    map<string, sparseVector> tfIdfVectors;
 };

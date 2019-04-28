@@ -17,12 +17,12 @@ TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
   int numMessages = messages.size();
   init_word_count_maps(messages);
 
-  std::cout << "HERE " << word_frequencies.size() << std::endl; 
-
-  vector<sparseVector> tfIdfVectors;
+  map<string, sparseVector> tfIdfVectors;
 
   for (auto wordCountMapsIterator = word_count_maps.begin(); wordCountMapsIterator != word_count_maps.end(); wordCountMapsIterator++) {
     sparseVector tfidfvec;
+
+    string messageId = wordCountMapsIterator->first;
     map<string, int> currentWordCountMap = wordCountMapsIterator->second;
 
     int wordCount = 0;
@@ -31,7 +31,7 @@ TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
     for (auto wordIterator = word_frequencies.begin(); wordIterator != word_frequencies.end(); wordIterator++) {
       string currentWord = wordIterator->first;
       int wordDocumentFrequency = wordIterator->second;
-      counter += wordDocumentFrequency;
+      counter++;
 
       if (wordDocumentFrequency < minFreq || wordDocumentFrequency > maxFreq) {
         continue;
@@ -52,13 +52,13 @@ TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
       tfidfvec[i] = tfidfvec[i] / wordCount;
     }
     
-    tfIdfVectors.push_back(tfidfvec);
+    tfIdfVectors[messageId] = tfidfvec;
   }
 
   this->tfIdfVectors = tfIdfVectors;
 }
 
-vector<sparseVector> TfIdfVector::getVectors() const {
+map<string, sparseVector> TfIdfVector::getVectors() const {
   return tfIdfVectors;
 }
 
@@ -69,7 +69,7 @@ unsigned TfIdfVector::getVectorLength() const  {
 void TfIdfVector::init_word_count_maps(vector<Message>& messages) {
   for (auto it = messages.begin(); it != messages.end(); it++) {
     map<string, int> word_count_map = message_to_word_map(*it);
-    word_count_maps[it->getResponseId()] = word_count_map;
+    word_count_maps[it->getMessageId()] = word_count_map;
   }
 }
 
@@ -98,6 +98,34 @@ map<string, int> TfIdfVector::message_to_word_map(Message& message) {
   return word_count_map;
 }
 
+double TfIdfVector::cosineSimilarity(sparseVector vectorA, sparseVector vectorB) const {
+  double dotProduct = 0.0;
+  double magnitudeA = 0.0;
+  double magnitudeB = 0.0;
+
+  for (auto iteratorA = vectorA.begin(); iteratorA != vectorA.end(); iteratorA++) {
+    int currentIdx = iteratorA->first;
+    double currentValueA = iteratorA->second;
+    if (vectorB.find(currentIdx) != vectorB.end()) {
+      double currentValueB = vectorB[currentIdx];
+      dotProduct += currentValueA * currentValueB;
+    }
+    magnitudeA += currentValueA * currentValueA;
+  }
+
+  for (auto iteratorB = vectorB.begin(); iteratorB != vectorB.end(); iteratorB++) {
+    double currentValueB = iteratorB->second;
+    magnitudeB += currentValueB * currentValueB;
+  }
+
+  magnitudeA = sqrt(magnitudeA);
+  magnitudeB = sqrt(magnitudeB);
+
+  double cosSimilarity = dotProduct / (magnitudeA * magnitudeB);
+
+  return cosSimilarity;
+}
+
 // code from: https://www.geeksforgeeks.org/tokenizing-a-string-cpp/
 vector<string> TfIdfVector::split(const string toSplit, const char delim) const {
   vector<string> splitString;
@@ -106,6 +134,7 @@ vector<string> TfIdfVector::split(const string toSplit, const char delim) const 
   string intermediate;
       
   while(getline(stream, intermediate, delim)) {
+    // just make everything lowercase
     transform(intermediate.begin(), intermediate.end(), intermediate.begin(), ::tolower);
     splitString.push_back(intermediate); 
   }
