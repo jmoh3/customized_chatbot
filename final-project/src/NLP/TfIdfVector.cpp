@@ -32,7 +32,6 @@ TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
       string currentWord = wordIterator->first;
       int wordDocumentFrequency = wordIterator->second;
       counter += wordDocumentFrequency;
-      std::cout << wordDocumentFrequency << std::endl;
 
       if (wordDocumentFrequency < minFreq || wordDocumentFrequency > maxFreq) {
         continue;
@@ -85,11 +84,14 @@ map<string, int> TfIdfVector::message_to_word_map(Message& message) {
     if (word_count_map.find(word) != word_count_map.end()) {
       word_count_map[word] += 1;
     } else {
+      // first occurrence of word in document - need to add it to word_frequencies map
+      if (word_frequencies.find(word) == word_frequencies.end()) {
+        word_frequencies[word] = 1;
+      } else {
+        word_frequencies[word] += 1;
+      }
+
       word_count_map[word] = 1;
-    }
-    
-    if (word_frequencies.find(word) == word_frequencies.end()) {
-      word_frequencies[word] = 1;
     }
   }
 
@@ -104,6 +106,7 @@ vector<string> TfIdfVector::split(const string toSplit, const char delim) const 
   string intermediate;
       
   while(getline(stream, intermediate, delim)) {
+    transform(intermediate.begin(), intermediate.end(), intermediate.begin(), ::tolower);
     splitString.push_back(intermediate); 
   }
 
