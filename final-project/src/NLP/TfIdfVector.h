@@ -26,6 +26,8 @@ class TfIdfVector {
      */
     TfIdfVector(vector<Message> messages);
 
+    vector<vector<double>> getVectors() const;
+
   // private:
     const char cDelimiter = ' ';
     /**
@@ -38,6 +40,8 @@ class TfIdfVector {
      * #word_frequencies maps a word to the number of messages that word appears in
      */
     map<string, unsigned int> word_frequencies;
+
+    vector<vector<double>> tfIdfVectors;
 
     /**
      * Initializes #word_count_maps.
@@ -71,7 +75,7 @@ class TfIdfVector {
      */
     double calculateTfIdf(int termCt, int documentWordCt, int documentCt, int numDocs);
 
-    map<string, int> getCommonWordMap(map<string, map<string, int>> wordMap);
+    map<string, int> getCommonWordMap(map<string, map<string, int>>& wordMap);
 
     unsigned int num_messages = 0;
 };
