@@ -43,6 +43,7 @@ TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
       if (wordDocumentFrequency < minFreq || wordDocumentFrequency > maxFreq) {
         continue;
       }
+      // std::cout << currentWord << std::endl;
 
       double val = 0.0;
 

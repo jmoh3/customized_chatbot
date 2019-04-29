@@ -2,7 +2,6 @@
 
 #include "TfIdfVector.h"
 #include "../Preprocessing/Message.h"
-#include "../Preprocessing/MessageParser.h"
 #include <iostream>
 #include <vector>
 #include <map>
@@ -15,11 +14,13 @@ using std::pair;
 
 class Model {
   public:
-    Model(vector<pair<vector<Message>, Message>> & pairs);
-    string getResponse(string input);
+    Model(string messageFileName, string user);
+    string getResponse(const string input);
 
   private:
+    const string kDefaultResponse = "I'm sorry, I didn't understand that.";
+
     map<string, Message*> messageIdToResponseMap;
     TfIdfVector vectorizer;
     map<string, Message *> idToResponseMap;
-}
+};
