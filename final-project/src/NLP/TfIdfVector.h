@@ -27,6 +27,11 @@ class TfIdfVector {
 
   public:
     /**
+     * Default constructor so the compiler stops whining.
+     */
+    TfIdfVector();
+
+    /**
      * Basic constructor from a list of messages.
      * 
      * @param messages vector of Message objects.
@@ -34,6 +39,20 @@ class TfIdfVector {
      * @param maxFreq the maximum frequency a word must have to be included in the vectors.
      */
     TfIdfVector(vector<Message> messages, int minFreq, int maxFreq);
+
+    /**
+     * Copy constructor.
+     * 
+     * @param other other TfIdfVector.
+     */
+    TfIdfVector(const TfIdfVector & other);
+
+    /**
+     * Overload of equals operator.
+     * 
+     * @param other TfIdfVector to assign to self.
+     */
+    TfIdfVector& operator=(const TfIdfVector & other);
 
     /**
      * Getter for tfidf vectors.
@@ -45,8 +64,10 @@ class TfIdfVector {
      */
     unsigned int getVectorLength() const;
 
+    string getMostSimilarMessageId(Message inputMessage) const;
+
   // private:
-    const char cDelimiter = ' ';
+    const char kDelimiter = ' ';
 
     /**
      * Initializes #word_count_maps.
@@ -60,7 +81,14 @@ class TfIdfVector {
      *
      * @param message The message that will fill the vector
      */
-    map<string, int> message_to_word_map(Message& message);
+    map<string, int> message_to_word_map(Message& message) const;
+
+    /**
+     * Takes a message and transforms it to a vector of all words in that message.
+     *
+     * @param message The message that will fill the vector
+     */
+    map<string, int> message_to_word_map_init(Message& message);
 
     /**
      * String splitter helper function.
@@ -78,7 +106,7 @@ class TfIdfVector {
      * @param documentFreq number of documents containing the word.
      * @param numDocs total number of documents.
      */
-    double calculateTfIdf(int termCt, int documentWordCt, int documentCt, int numDocs);
+    double calculateTfIdf(int termCt, int documentWordCt, int documentCt, int numDocs) const;
 
     /**
      * Helper method to calculate cosine similarity between 2 sparse vectors.
@@ -88,7 +116,7 @@ class TfIdfVector {
     double cosineSimilarity(sparseVector vectorA, sparseVector vectorB) const;
 
     /** Total number of messages. */
-    unsigned int num_messages = 0;
+    unsigned int numMessages;
 
     /** Length of tfidf vectors (number of words we're accounting for). */
     unsigned int vectorLength;
@@ -106,4 +134,10 @@ class TfIdfVector {
 
     /** Actual tfidf vectors. */
     map<string, sparseVector> tfIdfVectors;
+
+    /** Minimum number of times a word must appear to be included in the vectors. */
+    int minimumWordFrequency;
+
+    /** Maximum number of times a word must appear to be included in the vectors. */
+    int maximumWordFrequency;
 };

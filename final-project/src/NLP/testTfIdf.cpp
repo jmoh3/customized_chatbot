@@ -13,19 +13,36 @@ using std::pair;
 
 int main() {
 
-    MessageParser messages("../../data/messages/inbox/nanditaravikumar_ojm_ljprrg/message_1.json");
+    MessageParser messages("../../data/messages/inbox/jatinmathur_4qu8ioyqrq/message_1.json");
 
     vector<pair<vector<Message>, Message>> pairs = messages.getMessageResponsePairs("Jackie Oh");
 
     vector<Message> vec;
+    map<string, Message *> idToMessage;
 
     for (auto it = pairs.begin(); it != pairs.end(); it++) {
-        for (const Message & message : it->first) {
-            vec.push_back(message);
+        for (auto messageIt = it->first.begin(); messageIt != it->first.end(); messageIt++) {
+            vec.push_back(*messageIt);
+            string messageId = messageIt->getMessageId();
+            idToMessage[messageId] = &(*messageIt);
         }
     }
 
     TfIdfVector vectorizer(vec, 0, 100);
+
+    Message message("when are you coming?", "jackie", "123");
+
+    string id = vectorizer.getMostSimilarMessageId(message);
+
+    std::cout << id << std::endl;
+
+    auto it = idToMessage.find(id);
+
+    if (it != idToMessage.end()) {
+        std::cout << it->second->getContent() << std::endl;
+    }
+
+    // std::cout << idToMessage[id].getContent() << std::endl;
 
     // map<string, sparseVector> vectors = vectorizer.getVectors();
     // int vectorLength = vectorizer.getVectorLength();
@@ -46,10 +63,10 @@ int main() {
     //     std::cout << "\n";
     // }
 
-    sparseVector vec1 = {{0 , 1}, {1, 1}};
-    sparseVector vec2 = {{1 , 1}};
+    // sparseVector vec1 = {{0 , 1}, {1, 1}};
+    // sparseVector vec2 = {{1 , 1}};
 
-    std::cout << vectorizer.cosineSimilarity(vec1, vec2) << std::endl;
+    // std::cout << vectorizer.cosineSimilarity(vec1, vec2) << std::endl;
 
     return 0;
 }
