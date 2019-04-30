@@ -17,7 +17,7 @@ Model::Model() {
 }
 
 Model::Model(string messageFileName, string user) {
-  std::cout << "HERE\n";
+  this->user = user;
   MessageParser messages(messageFileName);
 
   vector<pair<vector<Message>, Message>> pairs = messages.getMessageResponsePairs(user);
@@ -46,9 +46,6 @@ Model::Model(Model & other) {
   this->vectorizer = other.vectorizer;
 }
 
-Model::~Model() {
-}
-
 Model& Model::operator=(const Model & other) {
   this->idToResponseMap = other.idToResponseMap;
   this->vectorizer = other.vectorizer;
@@ -70,4 +67,8 @@ string Model::getResponse(const string input) {
   } else {
     return kDefaultResponse;
   }
+}
+
+string Model::getUser() const {
+  return user;
 }
