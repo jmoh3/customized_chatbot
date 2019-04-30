@@ -68,11 +68,19 @@ class Message {
     unsigned getWordCount() const;
 
   private:
+    /** Content of message. */
     string content;
+  
+    /** Name of user who sent message. */
     string sender;
+  
+    /** ID of message (just the timestamp in milliseconds). */
     string messageId;
+  
+    /** ID of response to message. */
     string responseId;
 
+    /** Word count of message. */
     unsigned wordCount;
 
 };

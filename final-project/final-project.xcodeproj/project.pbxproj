@@ -86,18 +86,6 @@
 		37217BCC22729A9E0052FB0E /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		37217BCD22729A9E0052FB0E /* MessageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageParser.h; sourceTree = "<group>"; };
 		37217BCE22729A9E0052FB0E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		37217BD022729A9E0052FB0E /* settings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = settings.json; sourceTree = "<group>"; };
-		37217BD322729A9E0052FB0E /* mmap_address.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mmap_address.bin; sourceTree = "<group>"; };
-		37217BD522729A9E0052FB0E /* mmap_address.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mmap_address.bin; sourceTree = "<group>"; };
-		37217BD722729A9E0052FB0E /* mmap_address.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mmap_address.bin; sourceTree = "<group>"; };
-		37217BD822729A9E0052FB0E /* Message.ipch */ = {isa = PBXFileReference; lastKnownFileType = file; path = Message.ipch; sourceTree = "<group>"; };
-		37217BDA22729A9E0052FB0E /* mmap_address.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mmap_address.bin; sourceTree = "<group>"; };
-		37217BDB22729A9E0052FB0E /* MessageParser.ipch */ = {isa = PBXFileReference; lastKnownFileType = file; path = MessageParser.ipch; sourceTree = "<group>"; };
-		37217BDD22729A9E0052FB0E /* main.ipch */ = {isa = PBXFileReference; lastKnownFileType = file; path = main.ipch; sourceTree = "<group>"; };
-		37217BDE22729A9E0052FB0E /* mmap_address.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mmap_address.bin; sourceTree = "<group>"; };
-		37217BE022729A9E0052FB0E /* main.ipch */ = {isa = PBXFileReference; lastKnownFileType = file; path = main.ipch; sourceTree = "<group>"; };
-		37217BE122729A9E0052FB0E /* mmap_address.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mmap_address.bin; sourceTree = "<group>"; };
-		37217BE322729A9E0052FB0E /* mmap_address.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = mmap_address.bin; sourceTree = "<group>"; };
 		37217BE522729A9E0052FB0E /* testMessageParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testMessageParser.cpp; sourceTree = "<group>"; };
 		37FE45452277E43400A6C5A9 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
 		37FE45462277E43400A6C5A9 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
@@ -1905,7 +1893,6 @@
 				37217BCC22729A9E0052FB0E /* Message.h */,
 				37217BCD22729A9E0052FB0E /* MessageParser.h */,
 				37217BCE22729A9E0052FB0E /* .gitignore */,
-				37217BCF22729A9E0052FB0E /* .vscode */,
 				37217BE522729A9E0052FB0E /* testMessageParser.cpp */,
 			);
 			path = Preprocessing;
@@ -1984,89 +1971,6 @@
 				37217BCB22729A9E0052FB0E /* stdint.h */,
 			);
 			path = msinttypes;
-			sourceTree = "<group>";
-		};
-		37217BCF22729A9E0052FB0E /* .vscode */ = {
-			isa = PBXGroup;
-			children = (
-				37217BD022729A9E0052FB0E /* settings.json */,
-				37217BD122729A9E0052FB0E /* ipch */,
-			);
-			path = .vscode;
-			sourceTree = "<group>";
-		};
-		37217BD122729A9E0052FB0E /* ipch */ = {
-			isa = PBXGroup;
-			children = (
-				37217BD222729A9E0052FB0E /* 926eb58a2c37cbc0 */,
-				37217BD422729A9E0052FB0E /* 6293c334e1faa440 */,
-				37217BD622729A9E0052FB0E /* 7e2924ceedfdb8d9 */,
-				37217BD922729A9E0052FB0E /* 25145619e032cea */,
-				37217BDC22729A9E0052FB0E /* 1058b791aff990b9 */,
-				37217BDF22729A9E0052FB0E /* a5ed6927962f8c08 */,
-				37217BE222729A9E0052FB0E /* 11ca4ec4a5e496cf */,
-			);
-			path = ipch;
-			sourceTree = "<group>";
-		};
-		37217BD222729A9E0052FB0E /* 926eb58a2c37cbc0 */ = {
-			isa = PBXGroup;
-			children = (
-				37217BD322729A9E0052FB0E /* mmap_address.bin */,
-			);
-			path = 926eb58a2c37cbc0;
-			sourceTree = "<group>";
-		};
-		37217BD422729A9E0052FB0E /* 6293c334e1faa440 */ = {
-			isa = PBXGroup;
-			children = (
-				37217BD522729A9E0052FB0E /* mmap_address.bin */,
-			);
-			path = 6293c334e1faa440;
-			sourceTree = "<group>";
-		};
-		37217BD622729A9E0052FB0E /* 7e2924ceedfdb8d9 */ = {
-			isa = PBXGroup;
-			children = (
-				37217BD722729A9E0052FB0E /* mmap_address.bin */,
-				37217BD822729A9E0052FB0E /* Message.ipch */,
-			);
-			path = 7e2924ceedfdb8d9;
-			sourceTree = "<group>";
-		};
-		37217BD922729A9E0052FB0E /* 25145619e032cea */ = {
-			isa = PBXGroup;
-			children = (
-				37217BDA22729A9E0052FB0E /* mmap_address.bin */,
-				37217BDB22729A9E0052FB0E /* MessageParser.ipch */,
-			);
-			path = 25145619e032cea;
-			sourceTree = "<group>";
-		};
-		37217BDC22729A9E0052FB0E /* 1058b791aff990b9 */ = {
-			isa = PBXGroup;
-			children = (
-				37217BDD22729A9E0052FB0E /* main.ipch */,
-				37217BDE22729A9E0052FB0E /* mmap_address.bin */,
-			);
-			path = 1058b791aff990b9;
-			sourceTree = "<group>";
-		};
-		37217BDF22729A9E0052FB0E /* a5ed6927962f8c08 */ = {
-			isa = PBXGroup;
-			children = (
-				37217BE022729A9E0052FB0E /* main.ipch */,
-				37217BE122729A9E0052FB0E /* mmap_address.bin */,
-			);
-			path = a5ed6927962f8c08;
-			sourceTree = "<group>";
-		};
-		37217BE222729A9E0052FB0E /* 11ca4ec4a5e496cf */ = {
-			isa = PBXGroup;
-			children = (
-				37217BE322729A9E0052FB0E /* mmap_address.bin */,
-			);
-			path = 11ca4ec4a5e496cf;
 			sourceTree = "<group>";
 		};
 		37FE45482277E69F00A6C5A9 /* data */ = {

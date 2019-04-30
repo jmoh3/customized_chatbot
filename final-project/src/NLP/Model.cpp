@@ -57,7 +57,6 @@ string Model::getResponse(const string input) {
   Message message(input);
 
   string id = vectorizer.getMostSimilarMessageId(message);
-  std::cout << id << std::endl;
 
   auto findMessageIterator = idToResponseMap.find(id);
 

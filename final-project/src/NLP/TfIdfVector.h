@@ -75,21 +75,21 @@ class TfIdfVector {
      *
      * @param messages The vector of messages that will be used
      */
-    void init_word_count_maps(vector<Message>& messages);
+    void initializeWordCountMaps(vector<Message>& messages);
 
     /**
      * Takes a message and transforms it to a vector of all words in that message.
      *
      * @param message The message that will fill the vector
      */
-    map<string, int> message_to_word_map(Message& message) const;
+    map<string, int> getWordCountMap(Message& message) const;
 
     /**
      * Takes a message and transforms it to a vector of all words in that message.
      *
      * @param message The message that will fill the vector
      */
-    map<string, int> message_to_word_map_init(Message& message);
+    map<string, int> getWordCountMapInitialization(Message& message);
 
     /**
      * String splitter helper function.
@@ -123,15 +123,15 @@ class TfIdfVector {
     unsigned int vectorLength;
 
     /**
-     * #word_count_maps holds a map for each message. Each map maps a word in
+     * Holds a map for each message (key is message ID). Each map maps a word in
      * that message to the number of times it has been seen in that message.
      */
-    map<string, map<string, int>> word_count_maps;
+    map<string, map<string, int>> wordCountMaps;
 
     /**
-     * #word_frequencies maps a word to the number of messages that word appears in
+     * Maps a word to the number of messages that word appears in
      */
-    map<string, unsigned int> word_frequencies;
+    map<string, unsigned int> wordFrequencies;
 
     /** Actual tfidf vectors. */
     map<string, sparseVector> tfIdfVectors;

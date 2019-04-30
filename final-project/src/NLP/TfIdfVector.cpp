@@ -20,14 +20,14 @@ TfIdfVector::TfIdfVector() {
 TfIdfVector::TfIdfVector(vector<Message>& messages, double minFreq, double maxFreq) {
 
   numMessages = messages.size();
-  init_word_count_maps(messages);
+  initializeWordCountMaps(messages);
 
   minimumWordFrequency = minFreq * numMessages;
   maximumWordFrequency = maxFreq * numMessages;
 
   map<string, sparseVector> tfIdfVectors;
 
-  for (auto wordCountMapsIterator = word_count_maps.begin(); wordCountMapsIterator != word_count_maps.end(); wordCountMapsIterator++) {
+  for (auto wordCountMapsIterator = wordCountMaps.begin(); wordCountMapsIterator != wordCountMaps.end(); wordCountMapsIterator++) {
     sparseVector tfidfvec;
 
     string messageId = wordCountMapsIterator->first;
@@ -36,7 +36,7 @@ TfIdfVector::TfIdfVector(vector<Message>& messages, double minFreq, double maxFr
     int wordCount = 0;
     int counter = 0;
 
-    for (auto wordIterator = word_frequencies.begin(); wordIterator != word_frequencies.end(); wordIterator++) {
+    for (auto wordIterator = wordFrequencies.begin(); wordIterator != wordFrequencies.end(); wordIterator++) {
       string currentWord = wordIterator->first;
       int wordDocumentFrequency = wordIterator->second;
       counter++;
@@ -44,8 +44,7 @@ TfIdfVector::TfIdfVector(vector<Message>& messages, double minFreq, double maxFr
       if (wordDocumentFrequency < minimumWordFrequency || wordDocumentFrequency > maximumWordFrequency) {
         continue;
       }
-      // std::cout << currentWord << std::endl;
-
+      
       double val = 0.0;
 
       if (currentWordCountMap.find(currentWord) != currentWordCountMap.end()) {
@@ -70,8 +69,8 @@ TfIdfVector::TfIdfVector(vector<Message>& messages, double minFreq, double maxFr
 TfIdfVector::TfIdfVector(const TfIdfVector & other) {
   this->numMessages = other.numMessages;
   this->vectorLength = other.vectorLength;
-  this->word_count_maps = other.word_count_maps;
-  this->word_frequencies = other.word_frequencies;
+  this->wordCountMaps = other.wordCountMaps;
+  this->wordFrequencies = other.wordFrequencies;
   this->tfIdfVectors = other.tfIdfVectors;
   this->minimumWordFrequency = other.minimumWordFrequency;
   this->maximumWordFrequency = other.maximumWordFrequency;
@@ -80,8 +79,8 @@ TfIdfVector::TfIdfVector(const TfIdfVector & other) {
 TfIdfVector& TfIdfVector::operator=(const TfIdfVector & other) {
   this->numMessages = other.numMessages;
   this->vectorLength = other.vectorLength;
-  this->word_count_maps = other.word_count_maps;
-  this->word_frequencies = other.word_frequencies;
+  this->wordCountMaps = other.wordCountMaps;
+  this->wordFrequencies = other.wordFrequencies;
   this->tfIdfVectors = other.tfIdfVectors;
   this->minimumWordFrequency = other.minimumWordFrequency;
   this->maximumWordFrequency = other.maximumWordFrequency;
@@ -99,20 +98,19 @@ unsigned TfIdfVector::getVectorLength() const  {
 }
 
 string TfIdfVector::getMostSimilarMessageId(Message inputMessage) const {
-  map<string, int> word_count_map = message_to_word_map(inputMessage);
+  map<string, int> word_count_map = getWordCountMap(inputMessage);
 
   int counter = 0;
   int wordCount = 0;
 
   sparseVector tfidfvec;
 
-  for (auto wordIterator = word_frequencies.begin(); wordIterator != word_frequencies.end(); wordIterator++) {
+  for (auto wordIterator = wordFrequencies.begin(); wordIterator != wordFrequencies.end(); wordIterator++) {
     string currentWord = wordIterator->first;
     int wordDocumentFrequency = wordIterator->second;
     counter++;
 
     if (wordDocumentFrequency < minimumWordFrequency || wordDocumentFrequency > maximumWordFrequency) {
-      std::cout << currentWord << std::endl;
       continue;
     }
 
@@ -149,14 +147,14 @@ string TfIdfVector::getMostSimilarMessageId(Message inputMessage) const {
   return mostSimilarId;
 }
 
-void TfIdfVector::init_word_count_maps(vector<Message>& messages) {
+void TfIdfVector::initializeWordCountMaps(vector<Message>& messages) {
   for (auto it = messages.begin(); it != messages.end(); it++) {
-    map<string, int> word_count_map = message_to_word_map_init(*it);
-    word_count_maps[it->getMessageId()] = word_count_map;
+    map<string, int> word_count_map = getWordCountMapInitialization(*it);
+    wordCountMaps[it->getMessageId()] = word_count_map;
   }
 }
 
-map<string, int> TfIdfVector::message_to_word_map(Message& message) const {
+map<string, int> TfIdfVector::getWordCountMap(Message& message) const {
   string content = message.getContent();
   vector<string> splitMessage = split(content, kDelimiter);
   message.setWordCount(splitMessage.size());
@@ -174,7 +172,7 @@ map<string, int> TfIdfVector::message_to_word_map(Message& message) const {
   return word_count_map;
 }
 
-map<string, int> TfIdfVector::message_to_word_map_init(Message& message) {
+map<string, int> TfIdfVector::getWordCountMapInitialization(Message& message) {
   string content = message.getContent();
   vector<string> splitMessage = split(content, kDelimiter);
   message.setWordCount(splitMessage.size());
@@ -186,10 +184,10 @@ map<string, int> TfIdfVector::message_to_word_map_init(Message& message) {
       word_count_map[word] += 1;
     } else {
       // first occurrence of word in document - need to add it to word_frequencies map
-      if (word_frequencies.find(word) == word_frequencies.end()) {
-        word_frequencies[word] = 1;
+      if (wordFrequencies.find(word) == wordFrequencies.end()) {
+        wordFrequencies[word] = 1;
       } else {
-        word_frequencies[word] += 1;
+        wordFrequencies[word] += 1;
       }
 
       word_count_map[word] = 1;
