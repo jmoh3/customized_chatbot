@@ -15,3 +15,9 @@ To measure similarity between messages, I will use cosine similarity (dot produc
 The input to the model will be a message from the user. The model will find the most similar message to that input from a list of the messages from other users, and return the response to that message.
 
 When I finish with this approach, and with the chat UI, I will consider using word embeddings or other more learning based approaches.
+
+## Model now finished
+
+The RapidJSON library was very easy to use, which was nice, and as of Monday, April 29th version 1.0 of my chatbot model is now working! It's pretty fun to test on my messenger chats with other people.
+
+I've gotten started with the GUI but there aren't really any good templates out there for chat UIs, so it's gonna be mostly from scratch which is a little unfortunate.

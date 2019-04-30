@@ -11,12 +11,11 @@ My app needs to:
 1. Read conversation data inputted by user
 2. Parse that into message pairs (other person's message, your response)
 3. (Possibly) Convert words to word embeddings (word2vec)
-4. Create and train tensorflow model using either bag of words or word embeddings
+4. Create and train model using either bag of words approach (maybe word embeddings if time)
 
 After these steps, the app also needs to display an interactive user interface for the chatbot where the user can type messages and get responses from the trained model.
 
 ## What I'll be using
 
-* OpenFrameworks application (duh)
-* Library not covered in class: Tensorflow [link](https://www.tensorflow.org/api_docs/cc)
-* I came up with the idea on my own, but I looked it up and this has somewhat been done so here's the blog post I looked at [link](https://adeshpande3.github.io/How-I-Used-Deep-Learning-to-Train-a-Chatbot-to-Talk-Like-Me)
+* OpenFrameworks
+* Library not covered in class: RapidJSON [link](https://github.com/Tencent/rapidjson)
