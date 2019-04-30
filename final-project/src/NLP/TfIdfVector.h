@@ -38,7 +38,7 @@ class TfIdfVector {
      * @param minFreq the minimum frequency a word must have to be included in the vectors.
      * @param maxFreq the maximum frequency a word must have to be included in the vectors.
      */
-    TfIdfVector(vector<Message> messages, int minFreq, int maxFreq);
+    TfIdfVector(vector<Message>& messages, double minFreq, double maxFreq);
 
     /**
      * Copy constructor.
@@ -68,6 +68,7 @@ class TfIdfVector {
 
   // private:
     const char kDelimiter = ' ';
+    const string kNullId = "NO_ID";
 
     /**
      * Initializes #word_count_maps.

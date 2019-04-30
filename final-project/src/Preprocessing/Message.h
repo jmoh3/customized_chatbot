@@ -8,6 +8,12 @@ class Message {
 
   public:
     /**
+     * 
+     * @param content content of message.
+     */
+    Message(const string content);
+
+    /**
      * A basic constructor.
      * @param content content of message.
      * @param sender sender of message.

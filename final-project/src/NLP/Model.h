@@ -14,13 +14,18 @@ using std::pair;
 
 class Model {
   public:
+    Model();
+    Model(Model & other);
     Model(string messageFileName, string user);
+    ~Model();
+  
+    Model& operator=(const Model & other);
+
     string getResponse(const string input);
 
   private:
     const string kDefaultResponse = "I'm sorry, I didn't understand that.";
 
-    map<string, Message*> messageIdToResponseMap;
     TfIdfVector vectorizer;
-    map<string, Message *> idToResponseMap;
+    map<string, string> idToResponseMap;
 };

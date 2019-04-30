@@ -17,12 +17,13 @@ TfIdfVector::TfIdfVector() {
   // do nothing.
 }
 
-TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
-  minimumWordFrequency = minFreq;
-  maximumWordFrequency = maxFreq;
+TfIdfVector::TfIdfVector(vector<Message>& messages, double minFreq, double maxFreq) {
 
   numMessages = messages.size();
   init_word_count_maps(messages);
+
+  minimumWordFrequency = minFreq * numMessages;
+  maximumWordFrequency = maxFreq * numMessages;
 
   map<string, sparseVector> tfIdfVectors;
 
@@ -40,7 +41,7 @@ TfIdfVector::TfIdfVector(vector<Message> messages, int minFreq, int maxFreq) {
       int wordDocumentFrequency = wordIterator->second;
       counter++;
 
-      if (wordDocumentFrequency < minFreq || wordDocumentFrequency > maxFreq) {
+      if (wordDocumentFrequency < minimumWordFrequency || wordDocumentFrequency > maximumWordFrequency) {
         continue;
       }
       // std::cout << currentWord << std::endl;
@@ -125,14 +126,14 @@ string TfIdfVector::getMostSimilarMessageId(Message inputMessage) const {
   }
 
   if (tfidfvec.size() == 0) {
-    return "noMessageId";
+    return kNullId;
   }
  
   for (auto tfidfIterator = tfidfvec.begin(); tfidfIterator != tfidfvec.end(); tfidfIterator++) {
     tfidfIterator->second = tfidfIterator->second / wordCount;
   }
 
-  string mostSimilarId = "";
+  string mostSimilarId = kNullId;
   double bestSimilarity = -1.0;
 
   for (auto tfidfIterator = tfIdfVectors.begin(); tfidfIterator != tfIdfVectors.end(); tfidfIterator++) {
@@ -199,6 +200,7 @@ map<string, int> TfIdfVector::message_to_word_map_init(Message& message) {
 }
 
 double TfIdfVector::cosineSimilarity(sparseVector vectorA, sparseVector vectorB) const {
+
   double dotProduct = 0.0;
   double magnitudeA = 0.0;
   double magnitudeB = 0.0;
@@ -206,26 +208,22 @@ double TfIdfVector::cosineSimilarity(sparseVector vectorA, sparseVector vectorB)
   for (auto iteratorA = vectorA.begin(); iteratorA != vectorA.end(); iteratorA++) {
     int currentIdx = iteratorA->first;
     double currentValueA = iteratorA->second;
-    // std::cout << "currentValueA: " << currentValueA << std::endl;
+
     if (vectorB.find(currentIdx) != vectorB.end()) {
       double currentValueB = vectorB[currentIdx];
       dotProduct += currentValueA * currentValueB;
     }
+
     magnitudeA += currentValueA * currentValueA;
   }
 
   for (auto iteratorB = vectorB.begin(); iteratorB != vectorB.end(); iteratorB++) {
     double currentValueB = iteratorB->second;
     magnitudeB += currentValueB * currentValueB;
-    // std::cout << currentValueB << std::endl;
   }
-
-  // std::cout << "MagnitudeA prior to sqrt: " << magnitudeA << std::endl;
 
   magnitudeA = sqrt(magnitudeA);
   magnitudeB = sqrt(magnitudeB);
-
-  // std::cout << "MagnitudeA: " << magnitudeA << ", MagnitudeB: " << magnitudeB << ", dot prod: " << dotProduct << std::endl;
 
   double cosSimilarity = dotProduct / (magnitudeA * magnitudeB);
 

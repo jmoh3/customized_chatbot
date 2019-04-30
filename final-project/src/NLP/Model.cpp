@@ -12,13 +12,18 @@ using std::vector;
 using std::map;
 using std::pair;
 
+Model::Model() {
+  // does absolutely nothing
+}
+
 Model::Model(string messageFileName, string user) {
+  std::cout << "HERE\n";
   MessageParser messages(messageFileName);
 
   vector<pair<vector<Message>, Message>> pairs = messages.getMessageResponsePairs(user);
 
   vector<Message> messageVector;
-  map<string, Message *> idToMessage;
+  map<string, string> idToMessage;
 
   for (auto pairIterator = pairs.begin(); pairIterator != pairs.end(); pairIterator++) {
     vector<Message> incomingMessages = pairIterator->first;
@@ -27,13 +32,28 @@ Model::Model(string messageFileName, string user) {
     for (auto messageIt = incomingMessages.begin(); messageIt != incomingMessages.end(); messageIt++) {
       messageVector.push_back(*messageIt);
       string messageId = messageIt->getMessageId();
-      Message* heapResponse = new Message(response.getContent(), response.getSender(), response.getMessageId());
-      idToMessage[messageId] = heapResponse;
+      string responseContent = response.getContent();
+      idToMessage[messageId] = responseContent;
     }
   }
 
-  this->vectorizer = TfIdfVector(messageVector, 0, 100);
+  this->vectorizer = TfIdfVector(messageVector, 0.0, 1.0);
   this->idToResponseMap = idToMessage;
+}
+
+Model::Model(Model & other) {
+  this->idToResponseMap = other.idToResponseMap;
+  this->vectorizer = other.vectorizer;
+}
+
+Model::~Model() {
+}
+
+Model& Model::operator=(const Model & other) {
+  this->idToResponseMap = other.idToResponseMap;
+  this->vectorizer = other.vectorizer;
+  
+  return *this;
 }
 
 string Model::getResponse(const string input) {
@@ -45,10 +65,8 @@ string Model::getResponse(const string input) {
   auto findMessageIterator = idToResponseMap.find(id);
 
   if (findMessageIterator != idToResponseMap.end()) {
-    Message* responseMessagePtr = findMessageIterator->second;
-    string responseContent = responseMessagePtr->getContent();
-
-    return responseContent;
+    string responseMessage = findMessageIterator->second;
+    return responseMessage;
   } else {
     return kDefaultResponse;
   }
