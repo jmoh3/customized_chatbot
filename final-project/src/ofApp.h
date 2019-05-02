@@ -30,6 +30,7 @@ private:
   const int kLightGreyHighlight = 200;
   
   int headerHeight;
+  int messageConsoleHeight;
   
   const int kMessageBarHeight = 60;
   const int kMessageConsoleHeight = 30;
@@ -54,5 +55,7 @@ private:
   ofxGuiGroup messagesView;
   
   ofImage userIcon;
+  
+  ofColor color;
   
 };

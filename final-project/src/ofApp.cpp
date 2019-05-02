@@ -9,18 +9,17 @@ void ofApp::setup(){
   ofSetVerticalSync(true);
   
   // set bg to white
-  ofBackground(255);
+  ofBackground(color.white);
   
   string filename = "/Users/jackieoh/Desktop/cs126/openFrameworks/apps/myApps/final-project-jmoh3/final-project/data/messages/filtered_threads/themegans_1dhgynipdq/message_1.json";
   
-  user = "Fiza Goyal";
+  user = "Jackie Oh";
   
   model = new Model(filename, user);
   
   font.load(OF_TTF_SANS, 12);
   responseFont.load(OF_TTF_SANS, 12);
-
-userIcon.load("/Users/jackieoh/Desktop/cs126/openFrameworks/apps/myApps/final-project-jmoh3/final-project/src/user_icon.png");
+  userIcon.load("/Users/jackieoh/Desktop/cs126/openFrameworks/apps/myApps/final-project-jmoh3/final-project/src/user_icon.png");
   
 }
 
@@ -32,7 +31,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
   // draw message bar at bottom
-  ofSetColor(kLightGreyHighlight);
+  ofSetColor(color.lightGrey);
   ofRectangle messageBar(0, ofGetWindowHeight() - kMessageBarHeight, ofGetWindowWidth(), kMessageBarHeight);
   ofDrawRectangle(messageBar);
   
@@ -40,26 +39,24 @@ void ofApp::draw(){
   ofRectangle header(0, 0, ofGetWindowWidth(), ofGetWindowHeight() / 8);
   ofDrawRectangle(header);
   
-  ofSetColor(255);
+  ofSetColor(color.white);
   
   // draw little white strip where message in progress appears
   ofRectangle messageConsole(kOffsetX, ofGetWindowHeight() - kMessageConsoleHeight - kOffsetX, ofGetWindowWidth() - 20, kMessageConsoleHeight);
   ofDrawRectRounded(messageConsole, kMessageConsoleRadius);
   
-  ofColor textColor;
-  
   // draw message being typed
-  ofSetColor(textColor.black);
+  ofSetColor(color.black);
   font.drawString(currentMessage, kMessageOffsetX, ofGetWindowHeight() - kMessageOffsetY);
   
   // code from https://github.com/armadillu/ofxCenteredTrueTypeFont/blob/master/src/ofxCenteredTrueTypeFont.h
-  // draw's user's
+  // draw's user's name at top
   ofRectangle r = font.getStringBoundingBox(user, 0, 0);
   ofVec2f offsetVec( floor(-r.x - r.width * 0.5f), floor(-r.y - r.height * 0.5f) );
 
   font.drawString(user, ofGetWindowWidth() / 2 + offsetVec.x, ofGetWindowHeight() / 20 + kIconDimension / 2 + offsetVec.y + kMessageOffsetY - 10);
   
-  // draw icon
+  // draw user icon
   userIcon.draw(ofGetWindowWidth() / 2 - kIconDimension / 2, ofGetWindowHeight() / 20 - kIconDimension / 2, kIconDimension, kIconDimension);
   
   // draw messages
@@ -91,9 +88,7 @@ void ofApp::keyPressed(int key){
     drawMessages();
     
   } else if (key != OF_KEY_SHIFT) {
-    ofColor textColor;
-    
-    ofSetColor(textColor.black);
+    ofSetColor(color.black);
     
     currentMessage.append(1, (char)key);
     font.drawString(currentMessage, kMessageOffsetX, ofGetWindowHeight() - kMessageOffsetY);
@@ -152,27 +147,43 @@ void ofApp::dragEvent(ofDragInfo dragInfo) {
 
 //--------------------------------------------------------------
 void ofApp::drawMessages() {
-  int startY = ofGetWindowHeight() / 8;
-  int messageHeight = ofGetWindowHeight() / 20;
-  int whiteBackground = false;
+  size_t width = ofGetWindowWidth();
+  size_t height = ofGetWindowHeight();
   
-  for (auto it = messageList.begin(); it != messageList.end(); it++) {
+  size_t startY = height / 8;
+  size_t messageHeight = height / 20;
+  
+  bool whiteBackground = false;
+  
+  size_t messagesHeightWithoutCrop = messageList.size() * messageHeight;
+  size_t messagesHeightBound = height - headerHeight - kMessageConsoleHeight;
+  
+  size_t startMessageIdx = 0;
+  
+  // account for if there are too many messages to display on the whole screen
+  if (messagesHeightWithoutCrop > height - headerHeight - kMessageConsoleHeight) {
+    size_t difference = messagesHeightWithoutCrop - messagesHeightBound;
+    startMessageIdx = difference / messageHeight;
+  }
+  
+  for (size_t messageIdx = startMessageIdx; messageIdx < messageList.size(); messageIdx++) {
     // draw rectangle background
     if (!whiteBackground) {
-      ofColor rectColor;
-      ofSetColor(rectColor.lightBlue);
+      ofSetColor(color.lightBlue);
       
-      ofRectangle messageRect(0, startY, ofGetWindowWidth(), messageHeight);
+      ofRectangle messageRect(0, startY, width, messageHeight);
       ofDrawRectangle(messageRect);
     }
     
     // draw text
-    ofColor textColor;
-    ofSetColor(textColor.black);
+    ofSetColor(color.black);
     
-    responseFont.drawString(it->first, kMessageOffsetX, startY + kMessageOffsetX);
+    string sender = messageList[messageIdx].first;
+    string content = messageList[messageIdx].second;
     
-    responseFont.drawString(it->second, kMessageOffsetX * 12, startY + kMessageOffsetX);
+    responseFont.drawString(sender, kMessageOffsetX, startY + kMessageOffsetX);
+    
+    responseFont.drawString(content, kMessageOffsetX * 12, startY + kMessageOffsetX);
     
     startY += messageHeight;
     whiteBackground = !whiteBackground;
