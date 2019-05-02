@@ -66,7 +66,7 @@ class TfIdfVector {
 
     string getMostSimilarMessageId(Message inputMessage) const;
 
-  // private:
+   private:
     const char kDelimiter = ' ';
     const string kNullId = "NO_ID";
 

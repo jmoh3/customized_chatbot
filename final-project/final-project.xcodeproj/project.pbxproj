@@ -44,7 +44,6 @@
 		37217B8D22729A730052FB0E /* TfIdfVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TfIdfVector.cpp; sourceTree = "<group>"; };
 		37217B8E22729A730052FB0E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		37217B8F22729A730052FB0E /* TfIdfVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TfIdfVector.h; sourceTree = "<group>"; };
-		37217B9D22729A730052FB0E /* testTfIdf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testTfIdf.cpp; sourceTree = "<group>"; };
 		37217BA122729A9E0052FB0E /* MessageParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageParser.cpp; sourceTree = "<group>"; };
 		37217BA222729A9E0052FB0E /* Message.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Message.cpp; sourceTree = "<group>"; };
 		37217BA522729A9E0052FB0E /* fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwd.h; sourceTree = "<group>"; };
@@ -86,7 +85,6 @@
 		37217BCC22729A9E0052FB0E /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		37217BCD22729A9E0052FB0E /* MessageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageParser.h; sourceTree = "<group>"; };
 		37217BCE22729A9E0052FB0E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		37217BE522729A9E0052FB0E /* testMessageParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testMessageParser.cpp; sourceTree = "<group>"; };
 		37FE45452277E43400A6C5A9 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
 		37FE45462277E43400A6C5A9 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		37FE454D2277E69F00A6C5A9 /* 30658132_10155795689647013_8041969100869599232_n_2215573058690441.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 30658132_10155795689647013_8041969100869599232_n_2215573058690441.gif; sourceTree = "<group>"; };
@@ -1879,7 +1877,6 @@
 				37217B8D22729A730052FB0E /* TfIdfVector.cpp */,
 				37217B8E22729A730052FB0E /* .gitignore */,
 				37217B8F22729A730052FB0E /* TfIdfVector.h */,
-				37217B9D22729A730052FB0E /* testTfIdf.cpp */,
 			);
 			path = NLP;
 			sourceTree = "<group>";
@@ -1893,7 +1890,6 @@
 				37217BCC22729A9E0052FB0E /* Message.h */,
 				37217BCD22729A9E0052FB0E /* MessageParser.h */,
 				37217BCE22729A9E0052FB0E /* .gitignore */,
-				37217BE522729A9E0052FB0E /* testMessageParser.cpp */,
 			);
 			path = Preprocessing;
 			sourceTree = "<group>";

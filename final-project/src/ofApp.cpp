@@ -11,9 +11,9 @@ void ofApp::setup(){
   // set bg to white
   ofBackground(color.white);
   
-  string filename = "/Users/jackieoh/Desktop/cs126/openFrameworks/apps/myApps/final-project-jmoh3/final-project/data/messages/filtered_threads/themegans_1dhgynipdq/message_1.json";
+  string filename = "/Users/jackieoh/Desktop/cs126/openFrameworks/apps/myApps/final-project-jmoh3/final-project/src/mom_conversation.json";
   
-  user = "Jackie Oh";
+  user = "Ellen Oh";
   
   model = new Model(filename, user);
   

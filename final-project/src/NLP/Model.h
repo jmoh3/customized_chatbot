@@ -55,6 +55,9 @@ class Model {
   private:
     /** Default response if no similar message is found. */
     const string kDefaultResponse = "I'm sorry, I didn't understand that.";
+  
+    const int kMinFrequency = 0.0;
+    const int kMaxFrequency = 1.0;
 
     /** TfIdf vectorizer we are using (contains tfidf vectors) */
     TfIdfVector vectorizer;

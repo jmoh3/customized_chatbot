@@ -37,7 +37,7 @@ Model::Model(string messageFileName, string user) {
     }
   }
 
-  this->vectorizer = TfIdfVector(messageVector, 0.0, 1.0);
+  this->vectorizer = TfIdfVector(messageVector, kMinFrequency, kMaxFrequency);
   this->idToResponseMap = idToMessage;
 }
 
