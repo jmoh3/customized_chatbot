@@ -29,6 +29,8 @@ private:
   const int kBackgroundColorWhite = 255;
   const int kLightGreyHighlight = 200;
   
+  int headerHeight;
+  
   const int kMessageBarHeight = 60;
   const int kMessageConsoleHeight = 30;
   
@@ -37,6 +39,8 @@ private:
   const int kMessageOffsetY = 25;
   
   const int kMessageConsoleRadius = 5;
+  
+  const int kIconDimension = 50;
 
   string user;
   
@@ -48,5 +52,7 @@ private:
   
   Model* model;
   ofxGuiGroup messagesView;
+  
+  ofImage userIcon;
   
 };
