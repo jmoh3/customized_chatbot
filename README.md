@@ -1,3 +1,5 @@
 # Final Project: Customized chatbot!
 
-When this project is finished, users will be able to give my app a dataset containing their conversations with others (downloaded from facebook, JSON format). The app will use that information to  produce a chatbot that they can interact with in the app's window.
+To use this chatbot, go to ofApp.cpp and replace filepath with an absolute filepath to a conversation json in the same format that Facebook uses. You will also need to supply the name of the user that the chatbot will mimic. Then, run the project with Xcode, and there you have it!
+
+![screenshot](screenshot.png)
