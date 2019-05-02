@@ -38,7 +38,7 @@ MessageParser::MessageParser(std::string filename) {
   rapidjson::Value& messageArray = d["messages"];
   int numMessages = messageArray.GetArray().Size();
 
-  for (size_t i = numMessages - 1; i > 0; i--) {
+  for (int i = numMessages - 1; i >= 0; i--) {
     if (messageArray[i].HasMember("content")) {
 
       string content = messageArray[i]["content"].GetString();

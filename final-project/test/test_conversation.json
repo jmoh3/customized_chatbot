@@ -1,0 +1,28 @@
+{
+  "participants": [
+    {
+      "name": "Ellen Oh"
+    },
+    {
+      "name": "Jackie Oh"
+    }
+  ],
+  "messages": [
+    {
+      "sender_name": "Ellen Oh",
+      "timestamp_ms": 1556763212789,
+      "content": "It was pretty good! I made Emily's birthday cake!",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Jackie Oh",
+      "timestamp_ms": 1556763185014,
+      "content": "how was your day?",
+      "type": "Generic"
+    }
+  ],
+  "title": "Ellen Oh",
+  "is_still_participant": true,
+  "thread_type": "Regular",
+  "thread_path": "inbox/EllenOh_m8YIW6bsFw"
+}
