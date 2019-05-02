@@ -24,6 +24,8 @@ public:
   void gotMessage(ofMessage msg);
   
 private:
+  void drawMessages();
+  
   const int kBackgroundColorWhite = 255;
   const int kLightGreyHighlight = 200;
   
@@ -36,10 +38,14 @@ private:
   
   const int kMessageConsoleRadius = 5;
 
+  string user;
   
-  vector<string> messageList;
+  vector<pair<string,string>> messageList;
   string currentMessage;
+  
   ofTrueTypeFont font;
+  ofTrueTypeFont responseFont;
+  
   Model* model;
   ofxGuiGroup messagesView;
   

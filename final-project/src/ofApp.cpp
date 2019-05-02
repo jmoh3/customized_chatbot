@@ -11,11 +11,14 @@ void ofApp::setup(){
   // set bg to white
   ofBackground(255);
   
-  string filename = "/Users/jackieoh/Desktop/cs126/openFrameworks/apps/myApps/final-project-jmoh3/final-project/data/messages/filtered_threads/themegans_1dhgynipdq/message_1.json";
+  string filename = "/Users/jackieoh/Desktop/cs126/openFrameworks/apps/myApps/final-project-jmoh3/final-project/data/messages/inbox/nanditaravikumar_ojm_ljprrg/message_1.json";
   
-  string user = "Jackie Oh";
+  user = "Nandita Ravikumar";
   
   model = new Model(filename, user);
+  
+  font.load(OF_TTF_SANS, 12);
+  responseFont.load(OF_TTF_SANS, 12);
 }
 
 //--------------------------------------------------------------
@@ -38,8 +41,12 @@ void ofApp::draw(){
   ofRectangle messageConsole(kOffsetX, ofGetWindowHeight() - kMessageConsoleHeight - kOffsetX, ofGetWindowWidth() - 20, kMessageConsoleHeight);
   ofDrawRectRounded(messageConsole, kMessageConsoleRadius);
   
-  ofSetColor(200);
-  ofDrawBitmapString(currentMessage, kMessageOffsetX, ofGetWindowHeight() - kMessageOffsetY);
+  ofColor textColor;
+  
+  ofSetColor(textColor.black);
+  font.drawString(currentMessage, kMessageOffsetX, ofGetWindowHeight() - kMessageOffsetY);
+  
+  drawMessages();
   
 }
 
@@ -52,15 +59,27 @@ void ofApp::keyPressed(int key){
     currentMessage = currentMessage.substr(0, currentMessage.length()-1);
   }
   else if (key == OF_KEY_RETURN) {
-    ofSetColor(200);
+    ofColor textColor;
+    
+    ofSetColor(textColor.black);
+    pair<string, string> newMessageToSend("You", currentMessage);
+    messageList.push_back(newMessageToSend);
+    
     string response = model->getResponse(currentMessage);
-    std::cout << response << std::endl;
-    ofDrawBitmapString(response, ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
+    
+    pair<string, string> newIncomingMessage(user, response);
+    messageList.push_back(newIncomingMessage);
     
     currentMessage = "";
+    drawMessages();
+    
   } else {
+    ofColor textColor;
+    
+    ofSetColor(textColor.black);
+    
     currentMessage.append(1, (char)key);
-    ofDrawBitmapString(currentMessage, 15, ofGetWindowHeight() - 25);
+    font.drawString(currentMessage, kMessageOffsetX, ofGetWindowHeight() - kMessageOffsetY);
   }
 }
 
@@ -112,4 +131,34 @@ void ofApp::gotMessage(ofMessage msg) {
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo) { 
   
+}
+
+//--------------------------------------------------------------
+void ofApp::drawMessages() {
+  int startY = ofGetWindowHeight() / 10;
+  int messageHeight = ofGetWindowHeight() / 20;
+  int whiteBackground = false;
+  
+  for (auto it = messageList.begin(); it != messageList.end(); it++) {
+    std::cout << it->first << std::endl;
+    // draw rectangle background
+    if (!whiteBackground) {
+      ofColor rectColor;
+      ofSetColor(rectColor.lightBlue);
+      
+      ofRectangle messageRect(0, startY, ofGetWindowWidth(), messageHeight);
+      ofDrawRectangle(messageRect);
+    }
+    
+    // draw text
+    ofColor textColor;
+    ofSetColor(textColor.black);
+    
+    responseFont.drawString(it->first, kMessageOffsetX, startY + kMessageOffsetX);
+    
+    responseFont.drawString(it->second, kMessageOffsetX * 12, startY + kMessageOffsetX);
+    
+    startY += messageHeight;
+    whiteBackground = !whiteBackground;
+  }
 }
